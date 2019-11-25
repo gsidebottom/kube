@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: epe
+  name: epe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epe
+  template:
+    metadata:
+      labels:
+        app: epe
+    spec:
+      containers:
+      - name: epe
+        image: gsidebot/epeapp:v3
+        ports:
+        - containerPort: 80	
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: epe
+  name: epe
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: epe
+#  type: LoadBalancer
+  type: NodePort
